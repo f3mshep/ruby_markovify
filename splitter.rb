@@ -24,6 +24,8 @@ class SplitSentence
   # This way, we can impose grammatical rules by making the first word of the sentence
   # capitalized, and the end of the sentence will end with some sort of punctuation.
 
+
+
   def split_text
     current_sentence = ""
     corpus.each_char do |char|

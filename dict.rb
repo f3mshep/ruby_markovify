@@ -4,8 +4,10 @@ require 'pry'
 
 class Dictionary
 
+  #make this a module???
   BEGINNING = "__BEGIN__"
   ENDING = "__END__"
+
   attr_accessor :chain, :sentence_split
 
   def initialize(sentences)
