@@ -11,8 +11,7 @@ module Markovable
     attr_accessor :dictionary, :chainer, :split, :depth, :corpus
 
 
-    def initialize(file, desired_depth)
-
+    def initialize
     end
 
     def parse_string()
@@ -20,8 +19,7 @@ module Markovable
 
 
 
-    def parse_file(filename, desired_depth)
-      dict_depth = get_depth
+    def parse_file(filename, dict_depth)
       File.open(filename, 'r') do |file|
         self.corpus = file.read
       end
