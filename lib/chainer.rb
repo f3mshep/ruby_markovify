@@ -17,7 +17,8 @@ class Chainer
   end
 
   def make_sentence
-    while attempts <= MAX_ATTEMPTS
+    attempts = 0
+    while attempts < MAX_ATTEMPTS
       sentence = generate_text
       if test_sentence(sentence)
         return sentence

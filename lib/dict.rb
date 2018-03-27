@@ -1,7 +1,5 @@
 # class that takes a training corpus and creates a hash that represents
 # a markov chain state machine
-require 'pry'
-
 
 class Dictionary
 
