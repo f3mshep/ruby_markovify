@@ -7,7 +7,7 @@ class Chainer
 
   BEGINNING = "__BEGIN__"
   ENDING = "__END__"
-
+  MAX_ATTEMPS = 15
 
   def initialize(dictionary)
     self.dictionary = dictionary
@@ -15,6 +15,21 @@ class Chainer
     #takes in a dictionary object
     #constructs chain from dictionary object public interface
   end
+
+
+
+  def make_sentence
+    # DO NOT KEEP RECUSION HERE IT IS QUICK AND DIRTY
+    # WE COULD GET A VICIOUS, VICIOUS CALL STACK ERROR.
+    sentence = generate_text
+    if test_sentence(sentence)
+      return sentence
+    else
+      make_sentence
+    end
+  end
+
+  private
 
   def pick_next(words)
     word_list = dictionary.chain[words]
@@ -27,9 +42,11 @@ class Chainer
   end
 
   def test_sentence(sentence)
+    !dictionary.sentences.include?(sentence)
   end
 
-  def make_sentence
+
+  def generate_text
     current_chunk = [BEGINNING] * depth
     sentence = current_chunk
     while current_chunk.last != ENDING

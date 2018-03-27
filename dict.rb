@@ -8,13 +8,14 @@ class Dictionary
   BEGINNING = "__BEGIN__"
   ENDING = "__END__"
 
-  attr_accessor :chain, :sentence_split
+  attr_accessor :chain, :sentence_split, :sentences
   attr_reader :depth
-  def initialize(sentences)
-    # sentences is a splitter object, will use the attr_accessor
+  def initialize(sentence_split)
+    # sentence_split is a splitter object, will use the attr_accessor
     # as a public interface
-    self.sentence_split = sentences
+    self.sentence_split = sentence_split
     self.chain = Hash.new { |h, k| h[k] = [] }
+    self.sentences = sentence_split.sentences
     @depth = 2
   end
 
@@ -25,7 +26,6 @@ class Dictionary
     #head will then become the next word
     #nil is falsy in ruby, this might cause issues to set the empty indicator as
     # nil.
-    sentences = sentence_split.sentences
     sentences.each do |sentence|
       words = sentence.split(" ")
       chunk = [BEGINNING] * depth
