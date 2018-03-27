@@ -1,20 +1,11 @@
 load 'splitter.rb'
 load 'dict.rb'
 load 'chainer.rb'
+load 'init.rb'
 require 'pry'
 
-File.read("welcome_nightvale.txt")
-#file = File.read("jadenpt2.txt")
+chain = Markovable::Chain.new
 
-splitter = SplitSentence.new(file)
-
-splitter.split_text
-
-dict = Dictionary.new(splitter)
-
-dict.construct_chain
-
-chainer = Chainer.new(dict)
+chain.parse_file("nightvale_tweets.txt", 2)
 
 binding.pry
-chainer.make_sentence

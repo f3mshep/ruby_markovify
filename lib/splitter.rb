@@ -12,6 +12,7 @@ class SplitSentence
   def initialize(corpus)
     self.corpus = corpus
     self.sentences = []
+    split_text
   end
 
 
