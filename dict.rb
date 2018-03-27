@@ -27,14 +27,20 @@ class Dictionary
     sentences = sentence_split.sentences
     sentences.each do |sentence|
       words = sentence.split(" ")
-      head = BEGINNING
+      chunk = [BEGINNING, BEGINNING]
       words.each do |word|
-        chain[head] << word
-        head = word
+        # using a clone of the chunk ensures the VALUE
+        # of the chunk is used as the key, instead of
+        # whatever is stored at the memory address
+        # of the initial chunk
+        chain[chunk.clone] << word
+        chunk.shift
+        chunk.push(word)
       end
-      chain[head] << ENDING
+      chain[chunk] << ENDING
     end
     chain
+    binding.pry
   end
 
 end
