@@ -1,4 +1,4 @@
-# class that takes a dictionary class
+# class
 class Chainer
 
   attr_accessor :dictionary
@@ -15,8 +15,6 @@ class Chainer
     #takes in a dictionary object
     #constructs chain from dictionary object public interface
   end
-
-
 
   def make_sentence
     while attempts <= MAX_ATTEMPTS
@@ -38,6 +36,7 @@ class Chainer
   end
 
   def remove_markers(sentence)
+    #removes BEGINNING and ENDING markers
     sentence.pop
     sentence.shift(depth)
   end
@@ -47,8 +46,7 @@ class Chainer
   end
 
 
-  def generate_text
-    current_chunk = [BEGINNING] * depth
+  def generate_text(current_chunk = [BEGINNING] * depth)
     sentence = current_chunk
     while current_chunk.last != ENDING
       sentence << pick_next(current_chunk)
@@ -57,8 +55,5 @@ class Chainer
     remove_markers(sentence)
     sentence.join(' ')
   end
-
-  #will either pick a random word to start with or a supplied one. Maybe weigtht
-  #towards nil?
 
 end

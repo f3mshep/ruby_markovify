@@ -1,4 +1,5 @@
-#class that takes a training corpus and creates a chain dictionary
+# class that takes a training corpus and creates a hash that represents
+# a markov chain state machine
 require 'pry'
 
 
@@ -11,23 +12,21 @@ class Dictionary
   attr_accessor :chain, :sentence_split, :sentences
   attr_reader :depth
   def initialize(sentence_split)
-    # sentence_split is a splitter object, will use the attr_accessor
-    # as a public interface
     self.sentence_split = sentence_split
+    # The following line ensures a new array is created for each new key
+    # instead of using the memory address of the first array created
+    # as the default value
     self.chain = Hash.new { |h, k| h[k] = [] }
     self.sentences = sentence_split.sentences
     @depth = 2
+    construct_chain
   end
 
   def construct_chain
-    #for each word in each sentence
-    #nil is  beginning of sentence
-    #head is key, points to an array. Word after head will be pushed into array
-    #head will then become the next word
-    #nil is falsy in ruby, this might cause issues to set the empty indicator as
-    # nil.
     sentences.each do |sentence|
       words = sentence.split(" ")
+      # each chunk is an array that represents a state in the markov chain
+      # it is a key that points to the next possible states
       chunk = [BEGINNING] * depth
       words.each do |word|
         # using a clone of the chunk ensures the VALUE
