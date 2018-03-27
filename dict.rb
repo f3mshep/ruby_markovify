@@ -9,12 +9,13 @@ class Dictionary
   ENDING = "__END__"
 
   attr_accessor :chain, :sentence_split
-
+  attr_reader :depth
   def initialize(sentences)
     # sentences is a splitter object, will use the attr_accessor
     # as a public interface
     self.sentence_split = sentences
     self.chain = Hash.new { |h, k| h[k] = [] }
+    @depth = 2
   end
 
   def construct_chain
@@ -27,7 +28,7 @@ class Dictionary
     sentences = sentence_split.sentences
     sentences.each do |sentence|
       words = sentence.split(" ")
-      chunk = [BEGINNING, BEGINNING]
+      chunk = [BEGINNING] * depth
       words.each do |word|
         # using a clone of the chunk ensures the VALUE
         # of the chunk is used as the key, instead of
@@ -40,7 +41,6 @@ class Dictionary
       chain[chunk] << ENDING
     end
     chain
-    binding.pry
   end
 
 end
