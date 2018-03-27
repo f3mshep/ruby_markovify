@@ -7,7 +7,7 @@ class Chainer
 
   BEGINNING = "__BEGIN__"
   ENDING = "__END__"
-  MAX_ATTEMPS = 15
+  MAX_ATTEMPTS = 15
 
   def initialize(dictionary)
     self.dictionary = dictionary
@@ -19,14 +19,15 @@ class Chainer
 
 
   def make_sentence
-    # DO NOT KEEP RECUSION HERE IT IS QUICK AND DIRTY
-    # WE COULD GET A VICIOUS, VICIOUS CALL STACK ERROR.
-    sentence = generate_text
-    if test_sentence(sentence)
-      return sentence
-    else
-      make_sentence
+    while attempts <= MAX_ATTEMPTS
+      sentence = generate_text
+      if test_sentence(sentence)
+        return sentence
+      else
+        attempts += 1
+      end
     end
+    nil
   end
 
   private
