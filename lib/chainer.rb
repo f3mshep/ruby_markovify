@@ -11,7 +11,7 @@ class Chainer
 
   def initialize(dictionary)
     self.dictionary = dictionary
-    @depth = 2
+    @depth = dictionary.depth
     #takes in a dictionary object
     #constructs chain from dictionary object public interface
   end
@@ -43,7 +43,7 @@ class Chainer
   end
 
   def test_sentence(sentence)
-    !dictionary.sentences.include?(sentence)
+    !dictionary.has_sentence(sentence)
   end
 
 

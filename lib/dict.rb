@@ -9,15 +9,27 @@ class Dictionary
 
   attr_accessor :chain, :sentence_split, :sentences
   attr_reader :depth
-  def initialize(sentence_split)
+  def initialize(sentence_split, depth = 2)
     self.sentence_split = sentence_split
     # The following line ensures a new array is created for each new key
     # instead of using the memory address of the first array created
     # as the default value
     self.chain = Hash.new { |h, k| h[k] = [] }
     self.sentences = sentence_split.sentences
-    @depth = 2
+    @depth = depth
     construct_chain
+  end
+
+  def has_sentence(sentence)
+    sentences.include?(sentence)
+  end
+
+  def self.load_from_file
+
+  end
+
+  def save_to_file
+
   end
 
   def construct_chain

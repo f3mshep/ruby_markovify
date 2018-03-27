@@ -3,7 +3,7 @@ load 'dict.rb'
 load 'chainer.rb'
 require 'pry'
 
-file = File.read("welcome_nightvale.txt")
+File.read("welcome_nightvale.txt")
 #file = File.read("jadenpt2.txt")
 
 splitter = SplitSentence.new(file)
