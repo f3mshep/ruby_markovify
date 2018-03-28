@@ -20,9 +20,13 @@ module Markovable
 
 
     def parse_file(filename, dict_depth)
+
       File.open(filename, 'r') do |file|
         self.corpus = file.read
       end
+      # This needs to be refactored
+      # instance methods should now know the name of multiple
+      # classes!
       self.split = SplitSentence.new(corpus)
       self.dictionary = Dictionary.new(split, dict_depth)
       self.chainer = Chainer.new(dictionary)
@@ -33,16 +37,15 @@ module Markovable
     end
 
     def make_sentence
-      raise "No corpus in memory" if dictionary.nil?
       chainer.make_sentence
     end
 
     def make_sentences(amount)
-      sentences = []
-      amount.times do
-        sentences << make_sentence
-      end
-      sentences.join(' ')
+      chainer.make_sentences(amount)
+    end
+
+    def make_sentence_starts_with(phrase)
+      chainer.make_sentence_starts_with(phrase)
     end
 
     private

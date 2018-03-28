@@ -16,13 +16,22 @@ class Chainer
     #constructs chain from dictionary object public interface
   end
 
-  def sentence_starts_with(phrase)
+  def make_sentence_starts_with(phrase)
     chunk = get_chunk(phrase)
     partial = generate_text(chunk)
     "#{phrase} #{partial}"
   end
 
+  def make_sentences(amount)
+    sentences = []
+    amount.times do
+      sentences << make_sentence
+    end
+    sentences.join(' ')
+  end
+
   def make_sentence
+    raise "No corpus in memory" if dictionary.nil?
     attempts = 0
     while attempts < MAX_ATTEMPTS
       sentence = generate_text
