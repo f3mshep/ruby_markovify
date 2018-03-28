@@ -1,4 +1,3 @@
-#starts that shit
 #class that will tie everything together
 load 'splitter.rb'
 load 'dict.rb'
