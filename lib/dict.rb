@@ -12,7 +12,7 @@ class Dictionary
   def initialize(sentence_split, depth = 2)
     self.sentence_split = sentence_split
     # The following line ensures a new array is created for each new key
-    # instead of using the memory address of the first array created
+    # instead of using the memory address of the first array created    raise exception "First argument must contain a SplitSentence instance" if sentence_split.class != SentenceSplit
     # as the default value
     self.chain = Hash.new { |h, k| h[k] = [] }
     self.sentences = sentence_split.sentences
@@ -33,6 +33,7 @@ class Dictionary
   end
 
   def construct_chain
+    raise "No sentences in memory" if sentences.empty?
     sentences.each do |sentence|
       words = sentence.split(" ")
       # each chunk is an array that represents a state in the markov chain

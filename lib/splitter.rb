@@ -15,6 +15,9 @@ class SplitSentence
     split_text
   end
 
+  def clear_sentences
+    sentences.clear
+  end
 
   # We will want to change this to something that splits the words into an
   # array, then we will make another pass through the word array to find
@@ -28,6 +31,7 @@ class SplitSentence
 
 
   def split_text
+    clear_sentences
     current_sentence = ""
     corpus.each_char do |char|
       if SPLITTERS.include?(char)

@@ -3,7 +3,6 @@ class Chainer
 
   attr_accessor :dictionary
   attr_reader :depth
-  # perhaps chainer can have options to toggle on grammar rules
 
   BEGINNING = "__BEGIN__"
   ENDING = "__END__"

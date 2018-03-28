@@ -1,4 +1,3 @@
-require "splitter"
 require "spec_helper"
 
 
@@ -21,18 +20,18 @@ describe "#corpus" do
 end
 
 describe ".new" do
-  context "After initializing" do
+  context "When initializing" do
     it "generates a new instance of a splitter with a corpus" do
       expect(splitter.corpus).not_to be_empty
     end
-    it "generates an empty sentence array" do
-      expect(splitter.sentences).to be_empty
+    it "generates a sentence array" do
+      expect(splitter.sentences).not_to be_empty
     end
   end
 end
 
 describe "#split_sentence" do
-  context "Given a corpus" do
+  context "When given a corpus" do
     it "finds sentences, and splits them into arrays" do
       sentences = splitter.split_text
       expect(sentences).to eq(split_output)
