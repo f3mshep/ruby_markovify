@@ -21,10 +21,14 @@ class Chainer
     "#{phrase} #{partial}"
   end
 
-  def make_sentences(amount)
+  def make_sentence_of_length(how_long)
+    make_sentence_with_block {|sentence| sentence.length <= how_long}
+  end
+
+  def make_sentences(amount, condition=true)
     sentences = []
     amount.times do
-      sentences << make_sentence
+      sentences << make_sentence(condition)
     end
     sentences.join(' ')
   end
@@ -44,6 +48,18 @@ class Chainer
   end
 
   private
+
+  def make_sentence_with_block
+    attempts = 0
+    while attempts < MAX_ATTEMPTS
+      sentence = make_sentence
+      if yield(sentence)
+        return sentence
+      else
+        attempts += 1
+      end
+    end
+  end
 
   def get_chunk(phrase)
     words = phrase.split(' ')
