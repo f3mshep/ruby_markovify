@@ -2,7 +2,7 @@
 load 'splitter.rb'
 load 'dict.rb'
 load 'chainer.rb'
-require 'pry'
+
 
 module Markovable
   VERSION = '0.1.0'
@@ -25,12 +25,12 @@ module Markovable
     end
 
     def parse_file(filename, dict_depth = DEFAULT_DEPTH)
-      raise "Invalid file type" if !is_valid_file
+      raise "Invalid file type" if !is_valid_file(filename)
       text = File.read(filename)
       parse_string(text, dict_depth)
     end
 
-    def <<(corpus)
+    def << (corpus)
       if is_valid_file(corpus)
         parse_file(corpus)
       else

@@ -51,6 +51,9 @@ describe "#split_sentence" do
       expected = ["It is Jun. 12th"]
       expect(time_test.split_text).to eq(expected)
     end
+    it "closes open quotation marks" do
+      raise "not implemented yet"
+    end
   end
 end
 

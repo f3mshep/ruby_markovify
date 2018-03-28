@@ -1,6 +1,9 @@
 require "dict"
 require "splitter"
 require "dict"
+require "init"
+require "pry"
+require "pry-rescue"
 
 RSpec.configure do |config|
   # Use color in STDOUT

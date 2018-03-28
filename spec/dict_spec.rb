@@ -1,6 +1,6 @@
 require "spec_helper"
 
-corpus = File.read("text/welcome_nightvale.txt")
+corpus = File.read("spec/text/welcome_nightvale.txt")
 splitter = SplitSentence.new(corpus)
 dictionary = Dictionary.new(splitter)
 
@@ -8,7 +8,7 @@ dictionary = Dictionary.new(splitter)
 describe ".initialize" do
   context "When initialized" do
     it "Constructs a hash that serves as Markov chain receptacle" do
-      (dictionary.chain).should_be_kind_of(Hash)
+      expect(dictionary.chain).to be_a(Hash)
     end
     it "calls #construct_chain on initialization" do
     end
