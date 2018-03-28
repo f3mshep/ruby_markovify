@@ -2,7 +2,7 @@
 load 'splitter.rb'
 load 'dict.rb'
 load 'chainer.rb'
-
+require 'pry'
 
 module Markovable
   VERSION = '0.1.0'
