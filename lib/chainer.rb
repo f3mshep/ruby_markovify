@@ -16,11 +16,17 @@ class Chainer
     #constructs chain from dictionary object public interface
   end
 
+  def sentence_starts_with(phrase)
+    chunk = get_chunk(phrase)
+    partial = generate_text(chunk)
+    "#{phrase} #{partial}"
+  end
+
   def make_sentence
     attempts = 0
     while attempts < MAX_ATTEMPTS
       sentence = generate_text
-      if test_sentence(sentence)
+      if valid_sentence(sentence)
         return sentence
       else
         attempts += 1
@@ -31,8 +37,18 @@ class Chainer
 
   private
 
+  def get_chunk(phrase)
+    words = phrase.split(' ')
+    chunk = words.last(depth)
+    while chunk.size < depth
+      chunk.unshift(BEGINNING)
+    end
+    chunk
+  end
+
   def pick_next(words)
     word_list = dictionary.chain[words]
+    raise "No matching state found" if word_list.empty?
     word_list.sample
   end
 
@@ -42,7 +58,7 @@ class Chainer
     sentence.shift(depth)
   end
 
-  def test_sentence(sentence)
+  def valid_sentence(sentence)
     !dictionary.has_sentence(sentence)
   end
 
