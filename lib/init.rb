@@ -25,7 +25,7 @@ module Markovable
         self.corpus = file.read
       end
       # This needs to be refactored
-      # instance methods should now know the name of multiple
+      # instance methods should not know the name of multiple
       # classes!
       self.split = SplitSentence.new(corpus)
       self.dictionary = Dictionary.new(split, dict_depth)
@@ -48,11 +48,14 @@ module Markovable
       chainer.make_sentence_starts_with(phrase)
     end
 
+    def make_sentence_of_length(how_long)
+      chainer.make_sentence_of_length(how_long)
+    end
+
     private
 
     def default_depth
       return depth if depth
-
     end
 
   end
