@@ -12,11 +12,11 @@ module Markovable
     attr_reader :depth
     DEFAULT_DEPTH = 2
 
-    def initialize(filename = nil, depth=DEFAULT_DEPTH)
-      parse_file(filename, depth) if filename
+    def initialize(filename = nil, dict_depth=DEFAULT_DEPTH)
+      parse_file(filename, dict_depth) if filename
     end
 
-    def parse_string(text, dict_depth)
+    def parse_string(text, dict_depth=DEFAULT_DEPTH)
       if chainer
         add_from_text(text)
       else
