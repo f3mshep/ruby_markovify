@@ -32,9 +32,16 @@ class Dictionary
 
   end
 
-  def construct_chain
-    raise "No sentences in memory" if sentences.empty?
-    sentences.each do |sentence|
+  def expand_chain(text)
+    new_sentences = sentence_split.expand_corpus(text)
+    sentences = sentence_split.sentences
+    construct_chain(new_sentences)
+  end
+
+  def construct_chain(new_sentences = nil)
+    new_sentences = new_sentences || sentences
+    raise "No sentences in memory" if new_sentences.empty?
+    new_sentences.each do |sentence|
       words = sentence.split(" ")
       # each chunk is an array that represents a state in the markov chain
       # it is a key that points to the next possible states

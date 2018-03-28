@@ -30,19 +30,28 @@ class SplitSentence
 
 
 
-  def split_text
-    clear_sentences
+  def split_text(new_text = nil)
+    #not sure how elegant clear_sentence is here
+    clear_sentences unless new_text
+    new_text = new_text || corpus
     current_sentence = ""
-    corpus.each_char do |char|
+    new_sentences = []
+    new_text.each_char do |char|
       if SPLITTERS.include?(char)
         current_sentence << char
+        new_sentences << current_sentence
         self.sentences << current_sentence
         current_sentence = ""
       else
         current_sentence << char
       end
     end
-    sentences
+    new_sentences
+  end
+
+  def expand_corpus(new_text)
+    corpus << "\n" + new_text
+    split_text(new_text)
   end
 
   private
