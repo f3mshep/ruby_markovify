@@ -60,4 +60,12 @@ class Dictionary
     chain
   end
 
+  def clear_chain
+    chain.clear
+  end
+
+  def clear_sentences
+    sentences.clear
+  end
+
 end

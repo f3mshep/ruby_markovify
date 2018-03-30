@@ -1,16 +1,21 @@
 require "spec_helper"
 
+
+
 describe ".initialize" do
   context "When initialized" do
     it "sets #dictionary" do
+
     end
     it "sets #depth based on #dictionary" do
+
     end
   end
 end
 
 describe "#make_sentence_starts_with" do
   it "makes sentence that starts with argument" do
+
   end
 end
 
