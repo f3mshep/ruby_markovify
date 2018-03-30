@@ -31,6 +31,7 @@ chain << "tiny-shakespeare.txt"
 chain.make_sentence_of_length(140)
 
 ```
+This will train the chain model on a file named `tiny-shakespear.txt` and return a sentence that is no longer than 140 characters, which does not appear in the training corpus.
 
 You can push multiple files or strings into one chain instance. By default, chains will be initialized with a depth of 2. 
 
