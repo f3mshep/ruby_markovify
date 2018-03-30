@@ -11,6 +11,7 @@ module Markovable
     attr_accessor :dictionary, :chainer, :split
     attr_reader :depth
     DEFAULT_DEPTH = 2
+    MAX_FILENAME_LENGTH = 255
 
     def initialize(filename = nil, dict_depth=DEFAULT_DEPTH)
       parse_file(filename, dict_depth) if filename
@@ -31,7 +32,7 @@ module Markovable
     end
 
     def << (corpus)
-      if is_valid_file(corpus)
+      if corpus.length < 255 && split_words(corpus).length == 1
         parse_file(corpus)
       else
         parse_string(corpus)
@@ -39,6 +40,10 @@ module Markovable
     end
 
     ####Future Self: Make this a module####
+
+    def split_words(str)
+      str.split(" ")
+    end
 
     def make_sentence
       chainer.make_sentence
