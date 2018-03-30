@@ -1,7 +1,6 @@
 require_relative "../config/environment"
 
 module Markovite
-  VERSION = '0.1.0'
   FILE_EXT = [/.txt\z/i, /.rtf\z/i]
   class Chain
     attr_accessor :dictionary, :chainer, :split

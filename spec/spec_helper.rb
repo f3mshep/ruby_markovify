@@ -1,6 +1,5 @@
 require_relative "../config/environment.rb"
-require "pry"
-require "pry-rescue"
+
 
 RSpec.configure do |config|
   # Use color in STDOUT

@@ -1,12 +1,6 @@
 source "https://rubygems.org"
 
-gem "rspec"
+git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
-group :development do
-  gem "rspec"
-  gem "pry"
-  gem "byebug"
-  gem 'irbtools', require: 'irbtools/binding'
-  gem 'pry-rescue'
-  gem 'pry-stack_explorer'
-end
+# Specify your gem's dependencies in markovite.gemspec
+gemspec
