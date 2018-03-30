@@ -43,6 +43,7 @@ class SplitSentence
         self.sentences << current_sentence
         current_sentence = ""
       else
+        next if current_sentence == "" && char == " "
         current_sentence << char
       end
     end
@@ -55,5 +56,14 @@ class SplitSentence
   end
 
   private
+
+  def is_abbreviation
+  end
+
+  def is_url
+  end
+
+  def is_sentence_end
+  end
 
 end

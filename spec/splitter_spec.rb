@@ -3,7 +3,7 @@ require "spec_helper"
 
 test_text = "The quick brown fox jumps over the lazy dog. Wheee!"
 
-split_output = ["The quick brown fox jumps over the lazy dog.", " Wheee!"]
+split_output = ["The quick brown fox jumps over the lazy dog.", "Wheee!"]
 
 splitter = SplitSentence.new(test_text)
 
@@ -50,9 +50,6 @@ describe "#split_sentence" do
       time_test = SplitSentence.new("It is Jun. 12th")
       expected = ["It is Jun. 12th"]
       expect(time_test.split_text).to eq(expected)
-    end
-    it "closes open quotation marks" do
-      raise "not implemented yet"
     end
   end
 end

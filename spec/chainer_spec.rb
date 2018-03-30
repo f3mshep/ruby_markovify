@@ -18,6 +18,9 @@ describe "#make_sentence" do
   context "When called" do
     it "makes a sentence" do
     end
+    it "closes open quotation marks" do
+      raise "not implemented yet"
+    end
     it "validates sentence is not present in corpus" do
     end
     it "will return nil if it can't create sentence" do
