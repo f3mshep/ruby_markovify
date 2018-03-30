@@ -42,7 +42,7 @@ class Chainer
     attempts = 0
     while attempts < MAX_ATTEMPTS
       sentence = generate_text
-      if valid_sentence(sentence)
+      if is_valid_sentence?(sentence)
         return sentence
       else
         attempts += 1
@@ -86,10 +86,22 @@ class Chainer
     sentence.shift(depth)
   end
 
-  def valid_sentence(sentence)
+  def is_valid_sentence?(sentence)
     !dictionary.has_sentence(sentence)
   end
 
+  def has_open_quote?(sentence)
+    count = sentence.count("\"")
+    count.odd?
+  end
+
+  def close_open_quote(sentence)
+    if has_open_quote?(sentence)
+      "#{sentence}\""
+    else
+      sentence
+    end
+  end
 
   def generate_text(current_chunk = [BEGINNING] * depth)
     sentence = current_chunk
@@ -98,7 +110,8 @@ class Chainer
       current_chunk = sentence.last(depth)
     end
     remove_markers(sentence)
-    sentence.join(' ')
+    sentence = sentence.join(' ')
+    close_open_quote(sentence)
   end
 
 end

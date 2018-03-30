@@ -10,7 +10,7 @@ class SplitSentence
   attr_accessor :sentences, :corpus
 
   def initialize(corpus)
-    self.corpus = corpus
+    self.corpus = corpus.dup
     self.sentences = []
     split_text
   end

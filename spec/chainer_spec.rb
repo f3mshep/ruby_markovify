@@ -4,7 +4,11 @@ corpus = File.read("spec/text/test_chunk.txt")
 splitter = SplitSentence.new(corpus)
 dictionary = Dictionary.new(splitter)
 chainer = Chainer.new(dictionary)
-test_batch = 10
+test_corpus = File.read("spec/text/test_file.txt")
+test_splitter = SplitSentence.new(test_corpus)
+test_dictionary = Dictionary.new(test_splitter)
+test_chainer = Chainer.new(test_dictionary)
+test_batch = 100
 
 describe Chainer do
 
@@ -28,8 +32,6 @@ describe Chainer do
     end
   end
 
-
-
   describe "#make_sentence" do
     context "When called" do
       it "makes a sentence" do
@@ -37,14 +39,22 @@ describe Chainer do
         expect(new_sentence).to be_a(String)
         expect(new_sentence.length).to be > 0
       end
-      it "closes open quotation marks" do
-        pending("Implementation")
+      it "closes open double quotation marks" do
+        test_batch.times do
+          new_sentence = chainer.make_sentence
+          until new_sentence.include?("\"")
+            new_sentence = chainer.make_sentence
+          end
+          count = new_sentence.count("\"")
+          expect(count.even?).to be true
+        end
       end
       it "validates sentence is not present in corpus" do
-        pending("Implementation")
+        new_sentence = chainer.make_sentence
+        expect(chainer.send(:is_valid_sentence?, new_sentence)).to be true
       end
       it "will return nil if it can't create sentence" do
-        pending("Implementation")
+        expect(test_chainer.make_sentence).to eq(nil)
       end
     end
   end
