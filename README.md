@@ -1,8 +1,6 @@
 # Markovite
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/markovite`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Markovite is simple, but powerful markov chain generator that is designed to be hackable to your heart's delight. You can use this gem to generate official looking text with some training text AKA a corpus.
 
 ## Installation
 
@@ -22,7 +20,50 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To hit the ground running, you can do the following:
+
+```
+require "markovite"
+
+chain = Markovite::Chain.new
+chain << "tiny-shakespeare.txt"
+
+chain.make_sentence_of_length(140)
+
+```
+
+You can push multiple files or strings into one chain instance. By default, chains will be initialized with a depth of 2. 
+
+### Expanding Chain
+A new chain instance can optionally be initialized with
+a filename as the first argument, and the desired depth size as the second argument.
+
+`chain = Markovite::Chain.new("tiny-shakespeare.txt", 3)`
+
+Instances of chains can be modified by using the more specific 
+`chain.parse_file("sherlock.txt", 3)`
+or
+`chain.parse_string("I am a giant hamster person")`
+The second argument, the chain depth, will default to 2.
+
+### Creating Sentences
+
+`chain.make_sentence`
+
+Returns one sentence that does not appear in the corpus, or nil if the model is unable to generate a unique sentence.
+
+`chain.make_sentences(5)`
+
+Returns five sentences that do not appear in the corpus, or nil if the model is unable to generate a unique sentence.
+
+`chain.make_sentence_starts_with("Hello listeners")`
+
+Returns a sentence that begins with the argument, or nil if the model is unable to generate a unique sentence.
+
+`chain.make_sentence_of_length(280)`
+
+Returns a sentence with the length of 280 characters, or nil if the model is unable to generate a unique sentence.
+
 
 ## Development
 
