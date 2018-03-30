@@ -36,9 +36,7 @@ module Markovite
 
     ####Future Self: Make this a module####
 
-    def split_words(str)
-      str.split(" ")
-    end
+
 
     def make_sentence
       chainer.make_sentence
@@ -59,6 +57,10 @@ module Markovite
     ####  ####
 
     private
+
+    def split_words(str)
+      str.split(" ")
+    end
 
     def new_from_text(text, dict_depth)
       #look into refactoring this
