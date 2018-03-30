@@ -22,7 +22,7 @@ Or install it yourself as:
 
 To hit the ground running, you can do the following:
 
-```
+```ruby
 require "markovite"
 
 chain = Markovite::Chain.new
