@@ -1,8 +1,4 @@
-#class that will tie everything together
-load 'splitter.rb'
-load 'dict.rb'
-load 'chainer.rb'
-require 'pry'
+require_relative "../config/environment"
 
 module Markovite
   VERSION = '0.1.0'
