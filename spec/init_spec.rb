@@ -35,19 +35,19 @@ test_chain = {["__BEGIN__", "__BEGIN__"]=>["I", "Hello", "One"],
  ["another", "string."]=>["__END__"]}
 
 
-describe Markovable::Chain do
+describe Markovite::Chain do
   before :each do
-    @chain = Markovable::Chain.new
+    @chain = Markovite::Chain.new
   end
 
   describe ".initialize" do
     context "When initializing" do
       it "parses a file if provided as argument" do
-        @chain = Markovable::Chain.new(test_file)
+        @chain = Markovite::Chain.new(test_file)
         expect(@chain.chainer).to be_a(Chainer)
       end
       it "raises error if filename is not valid" do
-        expect {Markovable::Chain.new(bad_file)}.to raise_error("Invalid file type")
+        expect {Markovite::Chain.new(bad_file)}.to raise_error("Invalid file type")
       end
     end
   end

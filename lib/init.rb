@@ -4,7 +4,7 @@ load 'dict.rb'
 load 'chainer.rb'
 require 'pry'
 
-module Markovable
+module Markovite
   VERSION = '0.1.0'
   FILE_EXT = [/.txt\z/i, /.rtf\z/i]
   class Chain
