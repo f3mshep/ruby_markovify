@@ -26,13 +26,13 @@ module Markovable
     end
 
     def parse_file(filename, dict_depth = DEFAULT_DEPTH)
-      raise "Invalid file type" if !is_valid_file(filename)
+      raise "Invalid file type" if !is_valid_file_ext?(filename)
       text = File.read(filename)
       parse_string(text, dict_depth)
     end
 
     def << (corpus)
-      if corpus.length < 255 && split_words(corpus).length == 1
+      if is_file?(corpus)
         parse_file(corpus)
       else
         parse_string(corpus)
@@ -73,9 +73,13 @@ module Markovable
       self.chainer = Chainer.new(dictionary)
     end
 
-    def is_valid_file(filename)
+    def is_valid_file_ext?(filename)
       re = Regexp.union(FILE_EXT)
       filename.match(re)
+    end
+
+    def is_file?(str)
+      str.length < 255 && split_words(str).length == 1
     end
 
     def add_from_text(text)

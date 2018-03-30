@@ -44,7 +44,7 @@ describe Dictionary do
 
   describe "#depth" do
     it "Is immutable" do
-      expect {dictionary.depth = 3}.to raise_error()
+      expect {dictionary.depth = 3}.to raise_error('Depth cannot be changed')
     end
   end
 

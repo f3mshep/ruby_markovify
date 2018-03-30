@@ -24,12 +24,8 @@ class Dictionary
     sentences.include?(sentence)
   end
 
-  def self.load_from_file
-
-  end
-
-  def save_to_file
-
+  def depth=(arg)
+    raise "Depth cannot be changed"
   end
 
   def expand_chain(text)

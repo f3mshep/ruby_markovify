@@ -33,6 +33,10 @@ class Chainer
     sentences.join(' ')
   end
 
+  def depth=(arg)
+    raise "Depth cannot be changed"
+  end
+
   def make_sentence
     raise "No corpus in memory" if dictionary.nil?
     attempts = 0
