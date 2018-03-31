@@ -31,7 +31,7 @@ describe Chainer do
       expect(new_sentence.length).to be > 4
     end
     it "returns nil if it is unable to make a sentence" do
-      raise "Not implemented yet."
+      expect(chainer.make_sentence_starts_with("I DO NOT EXIST")).to eq(nil)
     end
   end
 
@@ -70,7 +70,7 @@ describe Chainer do
       end
     end
     it "returns nil if it is unable to construct a sentence of desired length" do
-      raise "not implemented yet"
+      expect(chainer.make_sentence_of_length(0)).to eq(nil)
     end
   end
 end

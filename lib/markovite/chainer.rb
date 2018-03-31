@@ -17,18 +17,26 @@ class Chainer
 
   def make_sentence_starts_with(phrase)
     chunk = get_chunk(phrase)
-    partial = generate_text(chunk)
+    begin
+      partial = generate_text(chunk)
+    rescue ArgumentError
+      return nil
+    end
     "#{phrase} #{partial}"
   end
 
   def make_sentence_of_length(how_long)
-    make_sentence_with_block {|sentence| sentence.length <= how_long}
+    begin
+      make_sentence_with_block {|sentence| sentence.length <= how_long}
+    rescue NoMethodError
+      return nil
+    end
   end
 
   def make_sentences(amount, condition=true)
     sentences = []
     amount.times do
-      sentences << make_sentence(condition)
+      sentences << make_sentence
     end
     sentences.join(' ')
   end
@@ -76,7 +84,7 @@ class Chainer
 
   def pick_next(words)
     word_list = dictionary.chain[words]
-    raise "No matching state found" if word_list.empty?
+    raise ArgumentError, "No matching state" if word_list.empty?
     word_list.sample
   end
 
