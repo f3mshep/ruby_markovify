@@ -29,8 +29,8 @@ class Dictionary
   end
 
   def expand_chain(text)
-    new_sentences = sentence_split.expand_corpus(text)
-    sentences = sentence_split.sentences
+    new_sentences = sentence_split.split_text(text)
+    sentences << sentence_split.sentences
     construct_chain(new_sentences)
   end
 

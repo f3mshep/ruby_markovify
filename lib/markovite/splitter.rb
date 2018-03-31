@@ -41,7 +41,7 @@ class SplitSentence
   # capitalized, and the end of the sentence will end with some sort of punctuation.
 
   def split_text(new_text = nil)
-    clear_sentences unless new_text
+    clear_sentences
     current_sentence = []
     new_text = new_text || corpus
     all_words = split_words(new_text)
@@ -58,11 +58,6 @@ class SplitSentence
     end
     add_sentence(current_sentence, nil) if !current_sentence.empty?
     sentences
-  end
-
-  def expand_corpus(new_text)
-    corpus << "\n" + new_text
-    split_text(new_text)
   end
 
   private
