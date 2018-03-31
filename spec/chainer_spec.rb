@@ -69,5 +69,8 @@ describe Chainer do
         expect(new_sentence.length).to be <= 140
       end
     end
+    it "returns nil if it is unable to construct a sentence of desired length" do
+      raise "not implemented yet"
+    end
   end
 end
