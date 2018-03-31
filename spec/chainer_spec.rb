@@ -30,6 +30,9 @@ describe Chainer do
       expect(test_chunk).to eq("I am")
       expect(new_sentence.length).to be > 4
     end
+    it "returns nil if it is unable to make a sentence" do
+      raise "Not implemented yet."
+    end
   end
 
   describe "#make_sentence" do
