@@ -1,6 +1,6 @@
 # Markovite
 
-Markovite is simple, but powerful markov chain generator that is designed to be hackable to your heart's delight. You can use this gem to generate official looking text with some training text AKA a corpus.
+Markovite, a markov chain generator that is simple to use and easy to hack. You can use this gem to generate random text using a corpus. 
 
 ## Installation
 
