@@ -73,10 +73,9 @@ class SplitSentence
       if is_end_of_sentence?(word)
         current_sentence = add_sentence(current_sentence, word)
       elsif has_newline?(word)
-        binding.pry
         newline_words = split_newline(word)
-        current_sentence = add_sentence(current_sentence, newline_words.first)
-        current_sentence << newline_words.last
+        current_sentence = add_sentence(current_sentence, newline_words[0])
+        current_sentence << newline_words[1]
       else
         current_sentence << word
       end
@@ -94,12 +93,12 @@ class SplitSentence
 
   def add_sentence(sentence, word)
     sentence << word if word
-    sentences << sentence.join(" ")
+    sentences << sentence.compact.join(" ")
     []
   end
 
   def split_words(text)
-    text.split(" ")
+    text.split(/ /)
   end
 
   def is_abbreviation(word)
@@ -107,12 +106,11 @@ class SplitSentence
   end
 
   def has_newline?(word)
-    binding.pry
     word.include?("\n")
   end
 
   def split_newline(word)
-    word.split("\n")
+    word.split("\n").map{|str| str.empty?? nil:str}
   end
 
   def is_end_of_sentence?(word)

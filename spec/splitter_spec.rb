@@ -1,6 +1,7 @@
 require "spec_helper"
 
 
+
 test_text = "The quick brown fox jumps over the lazy dog. Wheee!"
 
 split_output = ["The quick brown fox jumps over the lazy dog.", "Wheee!"]
@@ -38,8 +39,10 @@ describe SplitSentence do
         expect(sentences).to eq(split_output)
       end
       it "properly splits linebreaks" do
+        linebreak_test = SplitSentence.new("Hello Bigfoot \nI hear ducks!")
+        expected = ["Hello Bigfoot", "I hear ducks!"]
+        expect(linebreak_test.split_text).to eq(expected)
         linebreak_test = SplitSentence.new("Hello Bigfoot\n I hear ducks!")
-        expected = ["Hello Mr. Bigfoot", " I hear ducks!"]
         expect(linebreak_test.split_text).to eq(expected)
       end
       it "ignores common abbreviated titles" do
@@ -47,9 +50,9 @@ describe SplitSentence do
         expected = ["Hello Mr. Bigfoot"]
         expect(title_test.split_text).to eq(expected)
       end
-      it "ignores common abbreviated times" do
-        time_test = SplitSentence.new("It is Jun. 12th")
-        expected = ["It is Jun. 12th"]
+      it "ignores common abbreviated addresses" do
+        time_test = SplitSentence.new("I live on 12th ave. and it is very windy")
+        expected = ["I live on 12th ave. and it is very windy"]
         expect(time_test.split_text).to eq(expected)
       end
     end
