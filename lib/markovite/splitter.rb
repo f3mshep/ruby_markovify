@@ -40,30 +40,6 @@ class SplitSentence
   # This way, we can impose grammatical rules by making the first word of the sentence
   # capitalized, and the end of the sentence will end with some sort of punctuation.
 
-
-
-  def old_split_text(new_text = nil)
-    #not sure how elegant clear_sentence is here
-    clear_sentences unless new_text
-    new_text = new_text || corpus
-    current_sentence = ""
-    new_sentences = []
-    new_text.each_char do |char|
-      if ENDERS.include?(char)
-        current_sentence << char
-        new_sentences << current_sentence
-        self.sentences << current_sentence
-        current_sentence = ""
-      else
-        next if current_sentence == "" && char == " "
-        current_sentence << char
-      end
-    end
-    new_sentences
-  end
-
-
-
   def split_text(new_text = nil)
     clear_sentences unless new_text
     current_sentence = []
