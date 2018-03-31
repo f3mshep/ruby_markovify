@@ -81,7 +81,7 @@ class SplitSentence
   end
 
   def split_newline(word)
-    word.split("\n").map{|str| str.empty?? nil:str}
+    word.split("\n").map{|str| str.empty? ? nil:str}
   end
 
   def is_end_of_sentence?(word)

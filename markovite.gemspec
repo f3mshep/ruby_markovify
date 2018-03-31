@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["superbiscuit@gmail.com"]
 
   spec.summary       = "A markov chain generator that is simple to use and easy to hack."
-  spec.description   = "Doctors hate this one weird trick that generates really good looking gibberish!"
+  spec.description   = "Doctors hate this one weird trick that generates really good looking gibberish! \n Markovite is simple, but powerful markov chain generator that is designed to be hackable to your heart's delight"
   spec.homepage      = "https://github.com/f3mshep/ruby_markovify"
   spec.license       = "MIT"
 
