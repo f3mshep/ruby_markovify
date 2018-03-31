@@ -30,7 +30,7 @@ class Dictionary
 
   def expand_chain(text)
     new_sentences = sentence_split.split_text(text)
-    sentences << sentence_split.sentences
+    self.sentences += sentence_split.sentences
     construct_chain(new_sentences)
   end
 
