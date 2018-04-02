@@ -9,8 +9,8 @@ class Dictionary
 
   attr_accessor :chain, :sentence_split, :sentences
   attr_reader :depth
-  def initialize(sentence_split, depth = 2)
-    self.sentence_split = sentence_split
+  def initialize(sentence_split = nil, depth = 2)
+    self.sentence_split = sentence_split || SentenceSplit.new
     # The following line ensures a new array is created for each new key
     # instead of using the memory address of the first array created    raise exception "First argument must contain a SplitSentence instance" if sentence_split.class != SentenceSplit
     # as the default value
@@ -30,6 +30,7 @@ class Dictionary
 
   def expand_chain(text)
     new_sentences = sentence_split.split_text(text)
+    sentence_split.expand_corpus(text)
     self.sentences += sentence_split.sentences
     construct_chain(new_sentences)
   end

@@ -21,7 +21,7 @@ class SplitSentence
 
   attr_accessor :sentences, :corpus
 
-  def initialize(corpus)
+  def initialize(corpus = "")
     self.corpus = corpus.dup
     self.sentences = []
     split_text
@@ -58,6 +58,10 @@ class SplitSentence
     end
     add_sentence(current_sentence, nil) if !current_sentence.empty?
     sentences
+  end
+
+  def expand_corpus(text)
+    corpus += "\n" + text
   end
 
   private

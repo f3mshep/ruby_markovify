@@ -5,6 +5,7 @@ additional_file = "spec/text/additional_file.txt"
 bad_file = "text.zz"
 test_string = "I am a test string. Hello biscuits? One and two and three!"
 additional_string = "I am another string."
+third_string = "Step away from the carrots."
 test_chain = {["__BEGIN__", "__BEGIN__"]=>["I", "Hello", "One"],
  ["__BEGIN__", "I"]=>["am"],
  ["I", "am"]=>["a"],
@@ -33,11 +34,60 @@ test_chain = {["__BEGIN__", "__BEGIN__"]=>["I", "Hello", "One"],
  ["and", "three!"]=>["__END__"],
  ["am", "another"]=>["string."],
  ["another", "string."]=>["__END__"]}
+ third_chain = {["__BEGIN__", "__BEGIN__"]=>["I", "Hello", "One", "I", "Step"],
+  ["__BEGIN__", "I"]=>["am", "am"],
+  ["I", "am"]=>["a", "another"],
+  ["am", "a"]=>["test"],
+  ["a", "test"]=>["string."],
+  ["test", "string."]=>["__END__"],
+  ["__BEGIN__", "Hello"]=>["biscuits?"],
+  ["Hello", "biscuits?"]=>["__END__"],
+  ["__BEGIN__", "One"]=>["and"],
+  ["One", "and"]=>["two"],
+  ["and", "two"]=>["and"],
+  ["two", "and"]=>["three!"],
+  ["and", "three!"]=>["__END__"],
+  ["am", "another"]=>["string."],
+  ["another", "string."]=>["__END__"],
+  ["__BEGIN__", "Step"]=>["away"],
+  ["Step", "away"]=>["from"],
+  ["away", "from"]=>["the"],
+  ["from", "the"]=>["carrots."],
+  ["the", "carrots."]=>["__END__"]}
+
 
 
 describe Markovite::Chain do
   before :each do
     @chain = Markovite::Chain.new
+  end
+
+  describe ".combine" do
+    before :each do
+      @chain = Markovite::Chain.new
+      @chain.parse_file(test_file, 3)
+      @chain_dup = Markovite::Chain.new(additional_file)
+      @combined_chain = Markovite::Chain.combine(@chain, @chain_dup)
+    end
+    context "when called with 2 chain instances" do
+      it "creates a new Chain instance" do
+        expect(combined_chain).to be_a(Markovite::Chain)
+      end
+      it "generates a valid chain" do
+        expect(combined_chain).to eq(additional_chain)
+      end
+      it "defaults to using the depth of the first chain" do
+        expect(combined_chain.depth).to eq(@chain.depth)
+      end
+      it "sets the chain depth appropriately if specified" do
+        specific_depth = Markovite::Chain.combine(@chain, @chain_dup, 1)
+        expect(specific_depth.depth).to eq(1)
+      end
+      it "can combine multiple times" do
+        @third_chain = Markovite::Chain.new << third_string
+        final_chain = Markovite::Chain.combine(@third_chain, @combined_chain)
+      end
+    end
   end
 
   describe ".initialize" do

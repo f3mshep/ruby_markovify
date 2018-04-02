@@ -3,7 +3,7 @@ require_relative "../config/environment"
 module Markovite
   FILE_EXT = [/.txt\z/i, /.rtf\z/i]
   class Chain
-    attr_accessor :dictionary, :chainer, :split
+    attr_accessor :dictionary, :chainer, :split, :corpus
     attr_reader :depth
     MIN_DEPTH = 1
     MAX_DEPTH = 4
@@ -12,6 +12,13 @@ module Markovite
 
     def initialize(filename = nil, dict_depth=DEFAULT_DEPTH)
       parse_file(filename, dict_depth) if filename
+    end
+
+    def self.combine(left_chain, right_chain, dict_depth = nil)
+      @depth = dict_depth || left_chain.depth
+      new_chain = Markovite::Chain.new
+      new_chain.parse_string(left_chain.corpus, dict_depth)
+      new_chain.add_from_text(right_chain.corpus)
     end
 
     def parse_string(text, dict_depth=DEFAULT_DEPTH)
@@ -81,6 +88,7 @@ module Markovite
       #look into refactoring this
       @depth = dict_depth
       self.split = SplitSentence.new(text)
+      self.corpus = text
       self.dictionary = Dictionary.new(split, depth)
       self.chainer = Chainer.new(dictionary)
     end
