@@ -87,8 +87,10 @@ describe Markovite::Chain do
         @third_chain = Markovite::Chain.new
         @third_chain << third_string
         final_chain = Markovite::Chain.combine(@third_chain, @combined_chain)
-        binding.pry
-        expect(final_chain.dictionary.chain).to eq(third_chain)
+        final_hash = final_chain.dictionary.chain
+        final_hash.keys.each do |key|
+          expect(final_hash[key]).to match_array(third_chain[key])
+        end
       end
     end
   end
