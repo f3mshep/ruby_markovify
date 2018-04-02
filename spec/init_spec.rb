@@ -68,13 +68,15 @@ describe Markovite::Chain do
       @chain.parse_file(test_file, 3)
       @chain_dup = Markovite::Chain.new(additional_file)
       @combined_chain = Markovite::Chain.combine(@chain, @chain_dup)
+
     end
     context "when called with 2 chain instances" do
       it "creates a new Chain instance" do
         expect(@combined_chain).to be_a(Markovite::Chain)
       end
       it "generates a valid chain" do
-        expect(@combined_chain).to eq(additional_chain)
+        chain_depth_two = Markovite::Chain.combine(@chain, @chain_dup,2)
+        expect(chain_depth_two.dictionary.chain).to eq(additional_chain)
       end
       it "defaults to using the depth of the first chain" do
         expect(@combined_chain.depth).to eq(@chain.depth)
@@ -84,8 +86,11 @@ describe Markovite::Chain do
         expect(specific_depth.depth).to eq(1)
       end
       it "can combine multiple times" do
-        @third_chain = Markovite::Chain.new << third_string
+        @third_chain = Markovite::Chain.new
+        @third_chain << third_string
         final_chain = Markovite::Chain.combine(@third_chain, @combined_chain)
+        binding.pry
+        expect(final_chain.dictionary.chain).to eq(third_chain)
       end
     end
   end

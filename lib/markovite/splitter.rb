@@ -19,11 +19,10 @@ class SplitSentence
 
   #look into detecting abbreviations!
 
-  attr_accessor :sentences, :corpus
+  attr_accessor :corpus
 
   def initialize(corpus = "")
     self.corpus = corpus.dup
-    self.sentences = []
     split_text
   end
 

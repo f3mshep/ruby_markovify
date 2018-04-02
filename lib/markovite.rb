@@ -17,8 +17,10 @@ module Markovite
     def self.combine(left_chain, right_chain, dict_depth = nil)
       dict_depth = dict_depth || left_chain.depth
       new_chain = Markovite::Chain.new
+      binding.pry
       new_chain.parse_string(left_chain.corpus, dict_depth)
       new_chain.parse_string(right_chain.corpus, dict_depth)
+      new_chain
     end
 
     def parse_string(text, dict_depth=nil)
@@ -89,7 +91,7 @@ module Markovite
       #look into refactoring this
       @depth = dict_depth
       self.split = SplitSentence.new(text)
-      self.corpus = text
+      self.corpus = split.corpus
       self.dictionary = Dictionary.new(split, depth)
       self.chainer = Chainer.new(dictionary)
     end
