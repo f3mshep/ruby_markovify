@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    markovite (0.2.3)
+    markovite (0.2.4)
 
 GEM
   remote: https://rubygems.org/
