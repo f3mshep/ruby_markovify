@@ -15,7 +15,7 @@ class Dictionary
     # instead of using the memory address of the first array created    raise exception "First argument must contain a SplitSentence instance" if sentence_split.class != SentenceSplit
     # as the default value
     self.chain = Hash.new { |h, k| h[k] = [] }
-    self.sentences = sentence_split.sentences
+    self.sentences = sentence_split.split_text
     @depth = depth
     construct_chain
   end
@@ -31,7 +31,7 @@ class Dictionary
   def expand_chain(text)
     new_sentences = sentence_split.split_text(text)
     sentence_split.expand_corpus(text)
-    self.sentences += sentence_split.sentences
+    self.sentences += new_sentences
     construct_chain(new_sentences)
   end
 

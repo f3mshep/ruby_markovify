@@ -26,10 +26,6 @@ class SplitSentence
     split_text
   end
 
-  def clear_sentences
-    sentences.clear
-  end
-
   # We will want to change this to something that splits the words into an
   # array, then we will make another pass through the word array to find
   # where a sentence begins and ends
@@ -40,22 +36,24 @@ class SplitSentence
   # capitalized, and the end of the sentence will end with some sort of punctuation.
 
   def split_text(new_text = nil)
-    clear_sentences
     current_sentence = []
+    sentences = []
     new_text = new_text || corpus
     all_words = split_words(new_text)
     all_words.each do |word|
       if is_end_of_sentence?(word)
-        current_sentence = add_sentence(current_sentence, word)
+        sentences << add_sentence(current_sentence, word)
+        current_sentence.clear
       elsif has_newline?(word)
         newline_words = split_newline(word)
-        current_sentence = add_sentence(current_sentence, newline_words[0])
+        sentences << add_sentence(current_sentence, newline_words[0])
+        current_sentence.clear
         current_sentence << newline_words[1]
       else
         current_sentence << word
       end
     end
-    add_sentence(current_sentence, nil) if !current_sentence.empty?
+    sentences << add_sentence(current_sentence, nil) if !current_sentence.empty?
     sentences
   end
 
@@ -67,8 +65,7 @@ class SplitSentence
 
   def add_sentence(sentence, word)
     sentence << word if word
-    sentences << sentence.compact.join(" ")
-    []
+    sentence.compact.join(" ")
   end
 
   def split_words(text)

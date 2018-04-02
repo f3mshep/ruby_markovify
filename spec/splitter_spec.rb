@@ -9,11 +9,6 @@ split_output = ["The quick brown fox jumps over the lazy dog.", "Wheee!"]
 splitter = SplitSentence.new(test_text)
 
 describe SplitSentence do
-  describe "#sentences" do
-    it "responds to #sentences" do
-      expect(splitter).to respond_to(:sentences)
-    end
-  end
 
   describe "#corpus" do
     it "responds to #corpus" do
@@ -25,9 +20,6 @@ describe SplitSentence do
     context "When initializing" do
       it "generates a new instance of a splitter with a corpus" do
         expect(splitter.corpus).not_to be_empty
-      end
-      it "generates a sentence array" do
-        expect(splitter.sentences).not_to be_empty
       end
     end
   end

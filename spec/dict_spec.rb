@@ -55,8 +55,8 @@ describe Dictionary do
   end
 
   describe "#sentence_split" do
-    it "Points to an object that responds to #sentences" do
-      expect(dictionary.sentence_split).to respond_to(:sentences)
+    it "Points to an object that responds to #split_text" do
+      expect(dictionary.sentence_split).to respond_to(:split_text)
     end
   end
 
