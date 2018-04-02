@@ -81,6 +81,18 @@ describe Markovite::Chain do
         @chain.parse_string(additional_string)
         expect(@chain.dictionary.chain).to eq(additional_chain)
       end
+      it "can create chains of different lengths" do
+        chain_one = Markovite::Chain.new
+        chain_three = Markovite::Chain.new
+        chain_one.parse_string(additional_string,1)
+        expect(chain_one.depth).to eq(1)
+        chain_three.parse_string(additional_string,3)
+        expect(chain_three.depth).to eq(3)
+      end
+      it "will raise an exception if there is a chain depth conflict" do
+        @chain.parse_string(additional_string, 3)
+        expect {@chain.parse_string(additional_string, 2)}.to raise_error("Chain depth conflict")
+      end
     end
   end
 
@@ -94,6 +106,18 @@ describe Markovite::Chain do
         @chain.parse_file(test_file)
         @chain.parse_file(additional_file)
         expect(@chain.dictionary.chain).to eq(additional_chain)
+      end
+      it "can create chains of different lengths" do
+        chain_one = Markovite::Chain.new
+        chain_three = Markovite::Chain.new
+        chain_one.parse_file(test_file,1)
+        expect(chain_one.depth).to eq(1)
+        chain_three.parse_file(test_file,3)
+        expect(chain_three.depth).to eq(3)
+      end
+      it "will raise an exception if there is a chain depth conflict" do
+        @chain.parse_file(test_file, 3)
+        expect {@chain.parse_file(additional_file, 2)}.to raise_error("Chain depth conflict")
       end
       it "will reject files of invalid extension" do
         expect {@chain.parse_file(bad_file)}.to raise_error("Invalid file type")

@@ -5,6 +5,8 @@ module Markovite
   class Chain
     attr_accessor :dictionary, :chainer, :split
     attr_reader :depth
+    MIN_DEPTH = 1
+    MAX_DEPTH = 4
     DEFAULT_DEPTH = 2
     MAX_FILENAME_LENGTH = 255
 
@@ -13,6 +15,7 @@ module Markovite
     end
 
     def parse_string(text, dict_depth=DEFAULT_DEPTH)
+      depth_check(dict_depth)
       if chainer
         add_from_text(text)
       else
@@ -57,6 +60,18 @@ module Markovite
     ####  ####
 
     private
+
+    def depth_check(dict_depth)
+      if chainer
+        raise "Chain depth conflict" if dict_depth != depth
+      elsif !is_valid_depth?(dict_depth)
+        raise "Chain depth must be between #{MIN_DEPTH} and #{MAX_DEPTH}"
+      end
+    end
+
+    def is_valid_depth?(dict_depth)
+      dict_depth >= MIN_DEPTH && dict_depth <= MAX_DEPTH
+    end
 
     def split_words(str)
       str.split(" ")
