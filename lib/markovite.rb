@@ -15,13 +15,14 @@ module Markovite
     end
 
     def self.combine(left_chain, right_chain, dict_depth = nil)
-      @depth = dict_depth || left_chain.depth
+      dict_depth = dict_depth || left_chain.depth
       new_chain = Markovite::Chain.new
       new_chain.parse_string(left_chain.corpus, dict_depth)
-      new_chain.add_from_text(right_chain.corpus)
+      new_chain.parse_string(right_chain.corpus, dict_depth)
     end
 
-    def parse_string(text, dict_depth=DEFAULT_DEPTH)
+    def parse_string(text, dict_depth=nil)
+      dict_depth = dict_depth || self.depth || DEFAULT_DEPTH
       depth_check(dict_depth)
       if chainer
         add_from_text(text)

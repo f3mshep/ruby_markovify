@@ -71,13 +71,13 @@ describe Markovite::Chain do
     end
     context "when called with 2 chain instances" do
       it "creates a new Chain instance" do
-        expect(combined_chain).to be_a(Markovite::Chain)
+        expect(@combined_chain).to be_a(Markovite::Chain)
       end
       it "generates a valid chain" do
-        expect(combined_chain).to eq(additional_chain)
+        expect(@combined_chain).to eq(additional_chain)
       end
       it "defaults to using the depth of the first chain" do
-        expect(combined_chain.depth).to eq(@chain.depth)
+        expect(@combined_chain.depth).to eq(@chain.depth)
       end
       it "sets the chain depth appropriately if specified" do
         specific_depth = Markovite::Chain.combine(@chain, @chain_dup, 1)

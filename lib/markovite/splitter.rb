@@ -61,7 +61,7 @@ class SplitSentence
   end
 
   def expand_corpus(text)
-    corpus += "\n" + text
+    self.corpus += "\n" + text
   end
 
   private
