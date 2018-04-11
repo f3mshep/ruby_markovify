@@ -55,6 +55,14 @@ test_chain = {["__BEGIN__", "__BEGIN__"]=>["I", "Hello", "One"],
  ["from", "the"]=>["carrots."],
  ["the", "carrots."]=>["__END__"]}
 
+def chain_matcher(left, right)
+  left_hash = left.dictionary.chain
+  right_hash = right.dictionary.chain
+  left_hash.keys.each do |key|
+    expect(left_hash[key]).to match_array(right_hash[key])
+  end
+end
+
 describe Markovite::Chain do
   before :each do
     @chain = Markovite::Chain.new
@@ -87,13 +95,17 @@ describe Markovite::Chain do
         @third_chain = Markovite::Chain.new
         @third_chain << third_string
         final_chain = Markovite::Chain.combine(@third_chain, @combined_chain)
-        final_hash = final_chain.dictionary.chain
-        final_hash.keys.each do |key|
-          expect(final_hash[key]).to match_array(third_chain[key])
-        end
+        chain_matcher(final_chain, @third_chain)
+        # final_hash = final_chain.dictionary.chain
+        # final_hash.keys.each do |key|
+        #   expect(final_hash[key]).to match_array(third_chain[key])
+        # end
       end
     end
   end
+
+
+
 
   describe ".initialize" do
     context "When initializing" do
@@ -181,20 +193,38 @@ describe Markovite::Chain do
   end
 
   describe "#save" do
+    before :each do
+      @blank_chain = Markovite::Chain.new
+    end
     context "when called without an associated chainer instance" do
+      it "throws an error" do
+        expect {@blank_chain.save("test.json")}.to raise_error("No associated chain")
+      end
     end
     context "when properly called" do
       it "creates a valid file that matches the filename argument" do
-      end
-      it "creates a file that contains JSON data" do
+        @chain.save("temp/new_test_file")
+        expect("temp/new_test_file.json").to be_an_existing_file
       end
     end
   end
 
   describe "#load" do
-    context "when called with an invalid file" do
+    before :each do
+      @blank_chain = Markovite::Chain.new
+    end
+    context "when called with an invalid file type" do
+      it "throws an error" do
+        @blank_chain.load("invalid_file.txt")
+      end
     end
     context "when called with a valid file" do
+      it "reconstitutes a chainer instance from file" do
+        @chain.parse_file(test_file)
+        @chain.save("temp/test_file.json")
+        @blank_chain.load("temp/test_file.json")
+        chain_matcher(@chain, @blank_chain)
+      end
     end
   end
 

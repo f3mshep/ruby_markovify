@@ -11,4 +11,11 @@ RSpec.configure do |config|
   # Use the specified formatter
   config.formatter = :documentation # :progress, :html,
                                     # :json, CustomFormatterClass
+
+  config.after(:suite) do
+    Dir["temp"].each do |file|
+      File.delete(file)
+    end
+  end
+
 end
