@@ -56,11 +56,16 @@ test_chain = {["__BEGIN__", "__BEGIN__"]=>["I", "Hello", "One"],
  ["the", "carrots."]=>["__END__"]}
 
 def chain_matcher(left, right)
-  left_hash = left.dictionary.chain
-  right_hash = right.dictionary.chain
+  left_hash = to_chain_hash(left)
+  right_hash = to_chain_hash(right)
   left_hash.keys.each do |key|
     expect(left_hash[key]).to match_array(right_hash[key])
   end
+end
+
+def to_chain_hash(target)
+  return target if target.class == Hash
+  target.dictionary.chain
 end
 
 describe Markovite::Chain do
@@ -92,11 +97,9 @@ describe Markovite::Chain do
         expect(specific_depth.depth).to eq(1)
       end
       it "can combine multiple times" do
-        third_chain = Markovite::Chain.new
-        third_chain << third_string
-        final_chain = Markovite::Chain.combine(third_chain, @combined_chain)
-        third_chain << test_file
-        third_chain << additional_file
+        third_string_chain = Markovite::Chain.new
+        third_string_chain << third_string
+        final_chain = Markovite::Chain.combine(third_string_chain, @combined_chain)
         chain_matcher(final_chain, third_chain)
         # final_hash = final_chain.dictionary.chain
         # final_hash.keys.each do |key|
@@ -200,13 +203,20 @@ describe Markovite::Chain do
     end
     context "when called without an associated chainer instance" do
       it "throws an error" do
-        expect {@blank_chain.save("test.json")}.to raise_error("No associated chain")
+        expect {@blank_chain.save("test")}.to raise_error("No associated chain")
       end
     end
     context "when properly called" do
       it "creates a valid file that matches the filename argument" do
         @chain.save("temp/new_test_file")
         expect("temp/new_test_file.json").to be_an_existing_file
+      end
+      it "creates a file with properly encoded JSON that matches chain" do
+        @chain << test_file
+        @chain.save("temp/save_test.json")
+        json_file = File.read("temp/save_test.json")
+        json_hash = JSON.parse(json_file)
+        chain_match(@chain, json_hash)
       end
     end
   end

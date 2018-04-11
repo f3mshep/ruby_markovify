@@ -1,5 +1,6 @@
 require_relative "../config/environment.rb"
 require "pry"
+require "json"
 
 RSpec.configure do |config|
   # Use color in STDOUT

@@ -14,7 +14,8 @@ module Markovite
       parse_file(filename, dict_depth) if filename
     end
 
-    def save
+    def save(filename)
+
     end
 
     def load(filename)
