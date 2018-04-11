@@ -17,8 +17,6 @@ class SplitSentence
     "prof.", "rev.", "rt. hon.", "sr.", "st." #personal
   ]
 
-  #look into detecting abbreviations!
-
   attr_accessor :corpus
 
   def initialize(corpus = "")

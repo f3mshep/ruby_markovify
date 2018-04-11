@@ -14,6 +14,12 @@ module Markovite
       parse_file(filename, dict_depth) if filename
     end
 
+    def save
+    end
+
+    def load(filename)
+    end
+
     def self.combine(left_chain, right_chain, dict_depth = nil)
       dict_depth = dict_depth || left_chain.depth
       new_chain = Markovite::Chain.new

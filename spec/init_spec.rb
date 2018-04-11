@@ -180,6 +180,24 @@ describe Markovite::Chain do
     end
   end
 
+  describe "#save" do
+    context "when called without an associated chainer instance" do
+    end
+    context "when properly called" do
+      it "creates a valid file that matches the filename argument" do
+      end
+      it "creates a file that contains JSON data" do
+      end
+    end
+  end
+
+  describe "#load" do
+    context "when called with an invalid file" do
+    end
+    context "when called with a valid file" do
+    end
+  end
+
   describe "#<<" do
     context "when called on a file" do
       it "can create a new chain from a file" do
