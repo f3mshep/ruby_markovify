@@ -12,11 +12,10 @@ RSpec.configure do |config|
   # Use the specified formatter
   config.formatter = :documentation # :progress, :html,
                                     # :json, CustomFormatterClass
-
+  
+  # clean up temp save files
   config.after(:suite) do
-    Dir["../spec/temp/**/*"].each do |file|
-      File.delete(file)
-    end
+    FileUtils.rm_rf(Dir['spec/temp/*']) 
   end
 
 end
