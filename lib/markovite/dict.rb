@@ -43,8 +43,8 @@ class Dictionary
   end
 
   def construct_chain(new_sentences = nil)
+    self.depth = DEFAULT_DEPTH if depth.nil?
     new_sentences = new_sentences || sentences
-    # raise "No sentences in memory" if new_sentences.empty?
     new_sentences.each do |sentence|
       words = sentence.split(" ")
       # each chunk is an array that represents a state in the markov chain
@@ -78,7 +78,6 @@ class Dictionary
     self.sentence_split = sentence_split || SentenceSplit.new
     self.chain = chain || {}
     self.sentences = sentences || sentence_split.split_text
-    self.depth = depth || DEFAULT_DEPTH
     construct_chain if chain.empty?
   end
 

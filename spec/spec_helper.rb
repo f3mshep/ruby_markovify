@@ -14,7 +14,7 @@ RSpec.configure do |config|
                                     # :json, CustomFormatterClass
 
   config.after(:suite) do
-    Dir["temp"].each do |file|
+    Dir["../spec/temp/**/*"].each do |file|
       File.delete(file)
     end
   end

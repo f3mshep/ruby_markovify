@@ -69,16 +69,12 @@ describe Dictionary do
 
   describe "#construct_chain" do
     before :each do
-      @new_dict = Dictionary.new(splitter)
+      @new_dict = Dictionary.new({sentence_split:splitter})
     end
     context "When called" do
       it "constructs a markov chain" do
         @new_dict.clear_chain
         expect(@new_dict.construct_chain).to eq(test_chain)
-      end
-      it "Raises an error if there are no sentences" do
-        @new_dict.clear_sentences
-        expect { @new_dict.construct_chain }.to raise_error("No sentences in memory")
       end
     end
   end

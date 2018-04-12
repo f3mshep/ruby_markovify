@@ -16,14 +16,14 @@ module Markovite
     end
 
     def save(filename)
-      raise("No associated chain") if !self.chainer
-      json_blob = {}
-      json_blob["sentences"] = dictionary.sentences
-      json_blob["chain"] = dictionary.chain
-      json_blob["corpus"] = split.corpus
-      json_blob["depth"] = dictionary.depth
+      raise("Chain is empty") if dictionary.chain.empty?
+      msg_hash = {}
+      msg_hash["sentences"] = dictionary.sentences
+      msg_hash["chain"] = dictionary.chain
+      msg_hash["corpus"] = split.corpus
+      msg_hash["depth"] = dictionary.depth
       File.open("#{filename}.msg", "w") do |file|
-        test = file.write(json_blob.to_msgpack)
+        test = file.write(msg_hash.to_msgpack)
       end
       true
     end
@@ -33,12 +33,9 @@ module Markovite
       data = File.read("#{filename}")
       model = MessagePack.unpack(data)
       @depth = model["depth"]
-      self.split = SplitSentence.new("")
-      self.dictionary = Dictionary.new(split, depth)
       split.corpus = model["corpus"]
       dictionary.sentences = model["sentences"]
       dictionary.chain = model["chain"]
-      self.chainer = Chainer.new(dictionary)
     end
 
     def self.combine(left_chain, right_chain, dict_depth = nil)
@@ -53,12 +50,13 @@ module Markovite
       split.corpus
     end
 
-    def parse_string(text, dict_depth=nil)
-      dict_depth = dict_depth || self.depth || DEFAULT_DEPTH
-      depth_check(dict_depth)
-      if chainer
+    def parse_string(text, dict_depth = nil)
+      if self.depth
+        depth_check(dict_depth)
         add_from_text(text)
       else
+        dict_depth = dict_depth || DEFAULT_DEPTH
+        is_valid_depth?(dict_depth)
         new_from_text(text, dict_depth)
       end
     end
@@ -102,11 +100,7 @@ module Markovite
     private
 
     def depth_check(dict_depth)
-      if chainer
-        raise "Chain depth conflict" if dict_depth != depth
-      elsif !is_valid_depth?(dict_depth)
-        raise "Chain depth must be between #{MIN_DEPTH} and #{MAX_DEPTH}"
-      end
+        raise "Chain depth conflict" if !dict_depth.nil? && dict_depth != depth
     end
 
     def is_valid_depth?(dict_depth)
@@ -118,12 +112,9 @@ module Markovite
     end
 
     def new_from_text(text, dict_depth)
-      #look into refactoring this
       @depth = dict_depth
-      self.split = SplitSentence.new(text)
       @corpus = split.corpus
-      self.dictionary = Dictionary.new(split, depth)
-      self.chainer = Chainer.new(dictionary)
+      dictionary.expand_chain(text)
     end
 
 

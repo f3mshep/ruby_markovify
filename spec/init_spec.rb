@@ -79,7 +79,6 @@ describe Markovite::Chain do
       @chain.parse_file(test_file, 3)
       @chain_dup = Markovite::Chain.new(additional_file)
       @combined_chain = Markovite::Chain.combine(@chain, @chain_dup)
-
     end
     context "when called with 2 chain instances" do
       it "creates a new Chain instance" do
@@ -203,7 +202,7 @@ describe Markovite::Chain do
     end
     context "when called without an associated chainer instance" do
       it "throws an error" do
-        expect {@blank_chain.save("test")}.to raise_error("No associated chain")
+        expect {@blank_chain.save("test")}.to raise_error("Chain is empty")
       end
     end
     context "when properly called" do

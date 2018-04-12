@@ -59,7 +59,7 @@ class SplitSentence
   end
 
   def expand_corpus(text)
-    self.corpus += "\n" + text
+    self.corpus += " #{text}"
   end
 
   private

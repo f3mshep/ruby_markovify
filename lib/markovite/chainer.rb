@@ -90,8 +90,9 @@ class Chainer
 
   def remove_markers(sentence)
     #removes BEGINNING and ENDING markers
-    sentence.pop
-    sentence.shift(depth)
+    sentence.shift while sentence.first == BEGINNING
+    sentence.pop while sentence.last == ENDING
+    sentence
   end
 
   def is_valid_sentence?(sentence)
