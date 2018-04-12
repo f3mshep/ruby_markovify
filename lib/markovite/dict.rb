@@ -6,9 +6,10 @@ class Dictionary
   #make this a module???
   BEGINNING = "__BEGIN__"
   ENDING = "__END__"
+  DEFAULT_DEPTH = 2
 
-  attr_accessor :chain, :sentence_split, :sentences
-  attr_reader :depth
+  attr_accessor :sentence_split, :sentences
+  attr_reader :depth, :chain
 
   def initialize(attributes)
     attributes.each {|attribute, value| self.send("#{attribute}=", value)}
@@ -17,6 +18,15 @@ class Dictionary
 
   def has_sentence(sentence)
     sentences.include?(sentence)
+  end
+
+  def chain=(arg)
+    # The following line ensures a new array is created for each new key
+    # instead of using the memory address of the first array created
+    # as the default value
+    @chain = Hash.new { |h, k| h[k] = [] } if self.chain.nil?
+    arg.each {|key, value|chain[key] = value}
+    chain
   end
 
   def depth=(arg)
@@ -66,11 +76,9 @@ class Dictionary
 
   def set_default
     self.sentence_split = sentence_split || SentenceSplit.new
-    # The following line ensures a new array is created for each new key
-    # instead of using the memory address of the first array created
-    # as the default value
-    self.chain = chain || Hash.new { |h, k| h[k] = [] }
+    self.chain = chain || {}
     self.sentences = sentences || sentence_split.split_text
+    self.depth = depth || DEFAULT_DEPTH
     construct_chain if chain.empty?
   end
 

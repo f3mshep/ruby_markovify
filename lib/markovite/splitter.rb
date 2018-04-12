@@ -20,11 +20,11 @@ class SplitSentence
   attr_reader :corpus
 
   def initialize(corpus = nil)
-    self.corpus = corpus.dup if corpus
+    self.corpus = corpus || ""
   end
 
   def corpus=(text)
-    @corpus = 
+    @corpus = text.dup
   end
 
   # We will want to change this to something that splits the words into an

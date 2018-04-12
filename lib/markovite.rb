@@ -11,6 +11,7 @@ module Markovite
     MAX_FILENAME_LENGTH = 255
 
     def initialize(filename = nil, dict_depth=DEFAULT_DEPTH)
+      initialize_children
       parse_file(filename, dict_depth) if filename
     end
 
@@ -133,6 +134,12 @@ module Markovite
 
     def is_file?(str)
       str.length < 255 && split_words(str).length == 1
+    end
+
+    def initialize_children
+      self.split = SplitSentence.new
+      self.dictionary = Dictionary.new({sentence_split: split})
+      self.chainer = Chainer.new(dictionary)
     end
 
     def add_from_text(text)

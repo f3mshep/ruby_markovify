@@ -2,11 +2,11 @@ require "spec_helper"
 
 corpus = File.read("spec/text/test_chunk.txt")
 splitter = SplitSentence.new(corpus)
-dictionary = Dictionary.new(splitter)
+dictionary = Dictionary.new({sentence_split: splitter})
 chainer = Chainer.new(dictionary)
 test_corpus = File.read("spec/text/test_file.txt")
 test_splitter = SplitSentence.new(test_corpus)
-test_dictionary = Dictionary.new(test_splitter)
+test_dictionary = Dictionary.new({sentence_split: test_splitter})
 test_chainer = Chainer.new(test_dictionary)
 test_batch = 100
 

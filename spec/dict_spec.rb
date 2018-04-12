@@ -2,7 +2,7 @@ require "spec_helper"
 
 corpus = File.read("spec/text/test_file.txt")
 splitter = SplitSentence.new(corpus)
-dictionary = Dictionary.new(splitter)
+dictionary = Dictionary.new({sentence_split: splitter})
 test_chain = {["__BEGIN__", "__BEGIN__"]=>["I", "Hello", "One"],
  ["__BEGIN__", "I"]=>["am"],
  ["I", "am"]=>["a"],
