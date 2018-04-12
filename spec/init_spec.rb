@@ -208,15 +208,16 @@ describe Markovite::Chain do
     end
     context "when properly called" do
       it "creates a valid file that matches the filename argument" do
-        @chain.save("temp/new_test_file")
-        expect("temp/new_test_file.json").to be_an_existing_file
+        @chain << test_file
+        @chain.save("./spec/temp/new_test_file")
+        expect(File).to exist("./spec/temp/new_test_file.json")
       end
       it "creates a file with properly encoded JSON that matches chain" do
         @chain << test_file
-        @chain.save("temp/save_test.json")
-        json_file = File.read("temp/save_test.json")
-        json_hash = JSON.parse(json_file)
-        chain_match(@chain, json_hash)
+        @chain.save("./spec/temp/save_test")
+        json_file = File.read("./spec/temp/save_test.json")
+        binding.pry
+        chain_matcher(@chain, json_hash)
       end
     end
   end
@@ -233,8 +234,8 @@ describe Markovite::Chain do
     context "when called with a valid file" do
       it "reconstitutes a chainer instance from file" do
         @chain.parse_file(test_file)
-        @chain.save("temp/test_file.json")
-        @blank_chain.load("temp/test_file.json")
+        @chain.save("./spec/temp/test_file")
+        @blank_chain.load("./spec/temp/test_file.json")
         chain_matcher(@chain, @blank_chain)
       end
     end

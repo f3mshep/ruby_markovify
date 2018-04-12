@@ -15,7 +15,14 @@ module Markovite
     end
 
     def save(filename)
-
+      raise("No associated chain") if !self.chainer
+      json_blob = {}
+      json_blob["sentences"] = dictionary.sentences
+      json_blob["chain"] = dictionary.chain
+      json_blob["corpus"] = split.corpus
+      File.open("#{filename}.json", "w") do |file|
+        file.write(json_blob)
+      end
     end
 
     def load(filename)
