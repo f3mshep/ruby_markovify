@@ -216,11 +216,13 @@ describe Markovite::Chain do
         @chain << test_file
         @chain.save("./spec/temp/save_test")
         json_file = File.read("./spec/temp/save_test.json")
+        test_hash = JSON.parse(json_file)
         binding.pry
         chain_matcher(@chain, json_hash)
       end
     end
   end
+
 
   describe "#load" do
     before :each do

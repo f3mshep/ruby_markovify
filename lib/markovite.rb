@@ -21,7 +21,7 @@ module Markovite
       json_blob["chain"] = dictionary.chain
       json_blob["corpus"] = split.corpus
       File.open("#{filename}.json", "w") do |file|
-        file.write(json_blob)
+        file.write(json_blob.to_json)
       end
     end
 
