@@ -9,15 +9,10 @@ class Dictionary
 
   attr_accessor :chain, :sentence_split, :sentences
   attr_reader :depth
-  def initialize(sentence_split, depth = 2)
-    self.sentence_split = sentence_split
-    # The following line ensures a new array is created for each new key
-    # instead of using the memory address of the first array created    raise exception "First argument must contain a SplitSentence instance" if sentence_split.class != SentenceSplit
-    # as the default value
-    self.chain = Hash.new { |h, k| h[k] = [] }
-    self.sentences = sentence_split.split_text
-    @depth = depth
-    construct_chain
+
+  def initialize(attributes)
+    attributes.each {|attribute, value| self.send("#{attribute}=", value)}
+    set_default
   end
 
   def has_sentence(sentence)
@@ -25,7 +20,9 @@ class Dictionary
   end
 
   def depth=(arg)
-    raise "Depth cannot be changed"
+    raise "Depth cannot be changed" if depth
+    raise "Depth must be integer" if arg.class != Integer
+    @depth = arg
   end
 
   def expand_chain(text)
@@ -37,7 +34,7 @@ class Dictionary
 
   def construct_chain(new_sentences = nil)
     new_sentences = new_sentences || sentences
-    raise "No sentences in memory" if new_sentences.empty?
+    # raise "No sentences in memory" if new_sentences.empty?
     new_sentences.each do |sentence|
       words = sentence.split(" ")
       # each chunk is an array that represents a state in the markov chain
@@ -63,6 +60,18 @@ class Dictionary
 
   def clear_sentences
     sentences.clear
+  end
+
+  private
+
+  def set_default
+    self.sentence_split = sentence_split || SentenceSplit.new
+    # The following line ensures a new array is created for each new key
+    # instead of using the memory address of the first array created
+    # as the default value
+    self.chain = chain || Hash.new { |h, k| h[k] = [] }
+    self.sentences = sentences || sentence_split.split_text
+    construct_chain if chain.empty?
   end
 
 end

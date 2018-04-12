@@ -17,11 +17,14 @@ class SplitSentence
     "prof.", "rev.", "rt. hon.", "sr.", "st." #personal
   ]
 
-  attr_accessor :corpus
+  attr_reader :corpus
 
-  def initialize(corpus = "")
-    self.corpus = corpus.dup
-    split_text
+  def initialize(corpus = nil)
+    self.corpus = corpus.dup if corpus
+  end
+
+  def corpus=(text)
+    @corpus = 
   end
 
   # We will want to change this to something that splits the words into an

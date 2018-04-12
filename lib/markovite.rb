@@ -20,6 +20,7 @@ module Markovite
       json_blob["sentences"] = dictionary.sentences
       json_blob["chain"] = dictionary.chain
       json_blob["corpus"] = split.corpus
+      json_blob["depth"] = dictionary.depth
       File.open("#{filename}.msg", "w") do |file|
         test = file.write(json_blob.to_msgpack)
       end
@@ -27,8 +28,16 @@ module Markovite
     end
 
     def load(filename)
-      raise("Invalid file type") if !is_valid_file_ext(filename, /.msg\z/i)
-      
+      raise("Invalid file type") if !is_valid_file_ext?(filename, /.msg\z/i)
+      data = File.read("#{filename}")
+      model = MessagePack.unpack(data)
+      @depth = model["depth"]
+      self.split = SplitSentence.new("")
+      self.dictionary = Dictionary.new(split, depth)
+      split.corpus = model["corpus"]
+      dictionary.sentences = model["sentences"]
+      dictionary.chain = model["chain"]
+      self.chainer = Chainer.new(dictionary)
     end
 
     def self.combine(left_chain, right_chain, dict_depth = nil)
@@ -115,6 +124,7 @@ module Markovite
       self.dictionary = Dictionary.new(split, depth)
       self.chainer = Chainer.new(dictionary)
     end
+
 
     def is_valid_file_ext?(filename, ext = nil)
       re = ext || Regexp.union(FILE_EXT)
